@@ -1,0 +1,162 @@
+package com.example.db.vo;
+
+import java.math.BigDecimal;
+
+public class erd정리 {
+
+}
+//=========== 회원정보 ============
+class member{
+	int mem_idx;	// pk , 
+	
+	String mem_id;		// unique
+	String mem_pwd;
+	String mem_name;
+	String mem_tel;
+	String mem_email;
+	int mem_grade_idx; // fk
+	int mem_role_idx;	 // fk
+	String mem_bday;
+	String mem_regdate;
+}
+
+class member_profile{
+	int mem_idx;	// pk
+	
+	String mem_nickname;
+	String mem_intro;
+	String mem_img;
+}
+
+class member_addr{
+	int addr_idx;	// pk
+	
+	int mem_idx;	// fk
+	String mem_zipcode;
+	String mem_addr;
+	String mem_addrdetail;
+}
+
+
+class role{
+	int role_idx;	//pk
+	
+	String role_name;
+	// user / doctor / admin
+}
+
+class grade{
+	int grade_idx; // pk
+	
+	String grade_name;
+	// basic / silver / gold / vip
+	BigDecimal grade_discount_rate;
+	// 등급별 할인율 ( 0.05 / 0.1 / 0.2 )
+	
+}
+
+//=========== 반려동물정보 ============
+class pet{
+	int	   pet_idx;		// pk
+	
+	int mem_idx;		// fk
+	String pet_name;
+	String is_primary;
+	String pet_species;
+	String pet_gender;
+	String pet_breed;
+	int    pet_age;
+	String pet_bday;
+}
+
+
+// =========== 상품정보 ============
+class item{
+	int item_idx;	// pk
+	
+	String item_name;
+	int item_price;
+	String item_thumbnail_img;
+	String item_detail_img;
+	int item_stock;
+	String item_category;
+	String item_regdate;
+	
+}
+
+//=========== 장바구니 ============
+class cart{
+	int cart_idx;	//pk
+	
+	int mem_idx;	//fk
+	String cart_regdate;
+}
+
+class cart_item{
+	int cart_item_idx;	//pk
+	
+	int cart_idx;	//fk
+	int item_idx;	//fk
+	int cart_item_quantity;
+	
+}
+
+//=========== 주문정보 ============
+class order{
+	int order_idx;	// pk
+	
+	String mem_idx;		// fk
+	int order_total_price;
+	BigDecimal order_grade_discount;
+	BigDecimal order_coupon_discount;
+	String order_regdate;
+	String order_status;
+	// 주문상태	(결제됨 / 취소됨 / 배송중 등)
+}
+
+class order_item{
+	int order_item_idx;	// pk
+	
+	int order_idx;	// fk
+	int item_idx;		// fk
+	int order_item_quantity;
+	int order_price_at;	// 주문시점 단가
+}
+
+//=========== 커뮤니티 ============
+class board{
+	int board_idx;	//pk
+	
+	int mem_idx;	//fk
+	String board_title;
+	String board_content;
+	String board_type;
+	// 게시판 타입 (QnA / 공지사항 등)
+}
+
+class board_file{
+	int file_idx;	//pk
+	
+	int board_idx;	//fk
+	String file_original_name;
+	// 유저가 본래 저장한 파일 이름
+	String file_saved_name;
+	// 서버에서 중복을 피하기 위해 임의로 붙인 이름
+	String file_path;
+	String file_size;
+	// 파일 용량 확인. db 관리에 필요
+	String file_type;
+	// jpeg, png 등의 확장자
+	String file_regdate;
+	
+}
+
+class reply{
+	int reply_idx;	//pk
+	
+	int board_idx;	//fk(foreign key)
+	int mem_idx;		//fk
+	String reply_content;
+	String reply_regdate;
+	String reply_moddate;
+}

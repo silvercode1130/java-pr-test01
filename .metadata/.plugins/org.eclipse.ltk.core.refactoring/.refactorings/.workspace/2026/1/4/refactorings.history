@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;P_260123_miniproject&apos;" deleteContents="true" description="Delete resource &apos;P_260123_miniproject&apos;" element1="/P_260123_miniproject" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1769144755346"/>&#x0A;<refactoring comment="Rename resource &apos;P_260123_miniproject&apos; to &apos;ymca_miniproject&apos;" description="Rename resource &apos;P_260123_miniproject&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/P_260123_miniproject" name="ymca_miniproject" stamp="1769247930238" updateReferences="true"/>
+</session>

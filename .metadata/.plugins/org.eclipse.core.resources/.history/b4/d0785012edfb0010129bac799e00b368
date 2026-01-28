@@ -1,0 +1,23 @@
+/*
+
+-- 일련번호 관리
+create sequence seq_board_b_idx;
+
+-- 테이블
+create table board(
+	b_idx		int,						-- 일련번호
+	b_subject	varchar2(500) not null,		-- 제목
+	b_content	clob not null,				-- 내용
+	b_ip		varchar2(100) not null,		-- ip
+	b_readhit	int,						-- 조회수
+	b_regdate	date,						-- 등록일자
+	b_moddate	date,						-- 수정일자
+	mem_idx		int,						-- 회원번호
+	mem_id		varchar2(100) not null,		-- 회원아이디
+	b_ref		int,						-- 참조글 번호
+	b_step		int,						-- 글순서
+	b_depth		int,						-- 글깊이(답글)
+	b_use		char(1) default 'y'			-- 사용유무
+);
+
+*/

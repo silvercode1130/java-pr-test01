@@ -1,0 +1,20 @@
+package com.example.db.controller;
+
+import java.util.List;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.db.dao.GogekDao;
+import com.example.db.vo.GogekVo;
+
+public class GogekController {
+	
+	@RequestMapping("/gogek/list.do")
+	public String list(Model model) {
+		
+		List<GogekVo> list = GogekDao.selectList();
+		
+		return "gogek/gogek_list";
+	}
+}

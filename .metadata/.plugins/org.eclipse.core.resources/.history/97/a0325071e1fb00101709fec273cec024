@@ -1,0 +1,19 @@
+package com.example.db.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.db.vo.MemberVo;
+
+@Mapper
+public interface MemberDao {
+	
+	List<MemberVo>	selectList();
+	MemberVo		selectOneFromIdx(mem_idx);
+	MemberVo		selectOneFromId(mem_id);
+	int				insert(MemberVo);
+	int				update(MemberVo);
+	int				delete(MemberVo);
+	
+}

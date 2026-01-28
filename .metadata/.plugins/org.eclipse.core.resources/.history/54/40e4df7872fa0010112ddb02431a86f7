@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+	function send(f) {
+		let title = f.title.value.trim();
+		// javascript 내에서 이름이 동일한 parameter는 배열처리
+		let photo1 = f.photo[0].value;
+		let photo2 = f.photo[1].value;
+		
+		if(title==""){
+			alert("제목을 입력하세요!");
+			f.title.value="";
+			f.title.focus();
+			return;
+		}
+		if(photo1==""){
+			alert("사진을 선택하세요!");
+			return;
+		}
+		
+		f.action="upload1.do";	// 대상
+		f.submit();				// 전송
+	}
+
+</script>
+</head>
+<body>
+
+<!-- 파일 업로드 form 속성
+	1. method = POST
+	2. enctype="multipart/form-data" (반드시 똑같이 써야함!)
+-->
+
+<form method="POST" enctype="multipart/form-data">
+
+	제목 : <input name="title"><br>
+	<!-- 업로드 파일이 여러개일 경우 parameter 이름을 !반드시! 동일하게 설정해야함 -->
+	<!-- 	photo1, photo2 로 이름이 다르면 resolver는 photo1만 처리할 수 있음
+			같은 이름으로 보내면 multipartResolver가 list 로 받을 수 있다 -->
+	사진1 : <input type="file" name="photo"><br>
+	사진2 : <input type="file" name="photo"><br>
+		  <input type="button" value="전송" onclick="send(this.form);">
+</form>
+</body>
+</html>

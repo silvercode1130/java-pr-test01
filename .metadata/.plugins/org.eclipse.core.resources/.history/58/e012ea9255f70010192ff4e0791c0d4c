@@ -1,0 +1,10 @@
+package com.example.db.vo;
+
+import lombok.Data;
+
+@Data
+public class DeptVo {
+	int deptno;
+	String dname;
+	String loc;
+}

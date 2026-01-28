@@ -1,0 +1,71 @@
+package com.example.bbs.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.bbs.dao.BoardDao;
+import com.example.bbs.dao.MemberDao;
+import com.example.bbs.vo.BoardVo;
+import com.example.bbs.vo.MemberVo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/board/")
+public class BoardController {
+	
+	@Autowired
+	BoardDao boardDao;
+	
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	HttpSession session;
+	
+	// 게시글 조회
+	@RequestMapping("list.do")
+	public String list(Model model){
+		
+		List<BoardVo> list = boardDao.selectList();
+		
+		model.addAttribute("list", list);
+		
+		return "board/board_list";
+	}
+	
+	// 게시글 상세
+	@RequestMapping("view.do")
+	public String select_one(int b_idx, Model model) {
+		
+		BoardVo vo = boardDao.selectOneFromIdx(b_idx);
+		
+		model.addAttribute("vo", vo);
+		
+		return "board/board_view";
+	}
+	
+	// 글쓰기 폼
+	@RequestMapping("insert_form.do")
+	public String insert_form() {
+		
+		return "board/board_insert_form";
+	}
+	
+	
+	// board/insert?b_idx=1&b_subject=...
+	// 글쓰기
+	@RequestMapping("insert.do")
+	public String insert(BoardVo vo) {
+		
+		
+		int res = boardDao.insert(vo);
+		
+		return "board/board_insert";
+	}
+}

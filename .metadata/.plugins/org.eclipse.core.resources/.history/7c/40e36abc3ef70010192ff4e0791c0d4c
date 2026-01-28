@@ -1,0 +1,20 @@
+package com.example.db.vo;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+// @Data = getter + setter + toString()
+@Data
+@Alias("sawon")
+public class SawonVo {
+	 int SABUN;
+	 String SANAME;
+	 String SAGENDER;
+	 int DEPTNO;
+	 String SAJOB;
+	 String SAHIRE;
+	 int SAMGR;
+	 int SAPAY;
+
+}

@@ -1,0 +1,9 @@
+package com.example.db.dao;
+
+import java.util.List;
+
+import com.example.db.vo.SawonVo;
+
+public class SawonDao {
+	List<SawonVow> selecList();
+}

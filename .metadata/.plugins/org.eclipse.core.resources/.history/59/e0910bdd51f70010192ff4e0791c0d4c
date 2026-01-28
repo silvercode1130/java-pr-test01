@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ <table border=1px style="width:1000px; text-align:center;">
+ 	<tr>
+ 		<th>고객번호</th>
+ 		<th>고객명</th>
+ 		<th>주소</th>
+ 		<th>주민번호</th>
+ 		<th>담당직원</th>
+ 	</tr>
+ 	<!-- data -->
+ 	<c:forEach var="vo" items="${ requestScope.list }">
+	 	<tr>
+	 		<td>${ vo.gobun }</td>
+	 		<td>${ vo.goname }</td>
+	 		<td>${ vo.goaddr }</td>
+	 		<td>${ vo.gojumin }</td>
+	 		<td>${ vo.godam }</td>
+	 	</tr>
+ 	</c:forEach>
+ </table>
+</body>
+</html>
