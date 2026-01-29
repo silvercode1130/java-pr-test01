@@ -8,40 +8,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <!-- Bootstrap 3.x -->
+
+  <!-- Bootstrap 3.x -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	
-<style type="text/css">
-	#box{
-		width:1000px;
-		margin:auto;
-		margin-top: 50px;
-	}
-	
-	#title{
-		text-align:center;
-		font-size:26px;
-		color:rgb(51,122,183);
-		text-shadow: 1px 1px 1px white;
-		font-weight: bold;
-	}
-	
-</style>
 
-<script type="text/javascript">
-function member_delete(f){
-	
-	// 삭제확인
-	if(confirm("정말 삭제 하시겠습니까?")==false)return;
-	
-	f.method = "POST";		// delete.do?mem_idx=1 방식의 삭제는 허용하지 않겠다
-	f.action = "delete.do";	//MemberDeleteAction
-	f.submit();
-	
-}
-</script>
+  
+  <link rel="stylesheet" href="../css/common.css">
+  
+  <script type="text/javascript">
+  
+  	function member_delete(f){
+		// 삭제 확인은 항상 필수!!
+		if(!confirm("정말 삭제하시겠습니까?")) return;
+		
+		f.method = "POST";		// delete.do?mem_idx=1 방식의 삭제는 허용하지 않겠다
+		f.action = "delete.do";	// MemberDeleteAction
+		f.submit();
+  	}
+  
+  </script>
+
 </head>
 <body>
  <div id="box">
@@ -57,13 +45,15 @@ function member_delete(f){
   	<!-- 로그인정보 -->
   		<div class="col-sm-8" style="text-align:right;">
   		 
-  		 <!-- 로그인 안된경우 -->
+  		 <!-- 로그인 안된 경우 -->
   		 <c:if test="${empty sessionScope.user }">
   		 <input class="btn btn-primary" type="button" value="로그인" 
   		 		onclick="location.href='login_form.do'">
+  		 <input class="btn btn-primary" type="button" value="회원가입" 
+  		 		onclick="location.href='insert_form.do'">
   		 </c:if>
   		 
-  		 <!-- 로그인 된경우 -->
+  		 <!-- 로그인 된 경우 -->
   		 <c:if test="${not empty sessionScope.user }">
   		 		<b>${user.mem_name}</b>님 환영합니다
   		 		<input class="btn btn-primary" type="button" value="로그아웃" 

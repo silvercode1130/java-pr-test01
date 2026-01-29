@@ -15,4 +15,5 @@ public interface BoardDao {
 	int					insert(BoardVo vo);
 	int					update(BoardVo vo);
 	int					delete(int b_idx);
+	int					updateReadhit(int b_idx);
 }

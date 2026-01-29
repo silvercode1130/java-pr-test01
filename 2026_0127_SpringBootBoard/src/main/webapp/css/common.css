@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+/* =========================
+   Global
+========================= */
+
+body {
+    background: #F3EFEA; /* 웜 아이보리 */
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    color: #4E342E;
+}
+
+/* =========================
+   Layout Box (Card Style)
+========================= */
+
+#box {
+    width: 1300px;
+    margin: 60px auto;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 30px 40px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Title
+========================= */
+
+#title {
+    text-align: center;
+    font-size: 26px;
+    color: #E67E22;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+/* =========================
+   Panel (Login / Join)
+========================= */
+
+.panel {
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.panel-primary > .panel-heading {
+    background: linear-gradient(135deg, #E67E22 0%, #F5C16C 100%);
+    border: none;
+    color: #FFFFFF;
+}
+
+.panel-heading h4 {
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* =========================
+   Form Control
+========================= */
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #D7CCC8;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #E67E22;
+    box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
+}
+
+/* =========================
+   Table
+========================= */
+
+.table {
+    background: #FFFFFF;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.table thead th {
+    background: linear-gradient(135deg, #E67E22 0%, #F0B45C 100%);
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Table Body */
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    color: #4E342E;
+    border-top: 1px solid #E0E0E0;
+}
+
+/* Hover */
+.table tbody tr:hover {
+    background-color: #FFF7E6;
+}
+
+/* Button spacing in table */
+.table .btn {
+    margin: 0 2px;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+/* Primary */
+.btn-primary {
+    background: linear-gradient(135deg, #F2994A, #E67E22);
+    border: none;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #E67E22, #D35400);
+}
+
+/* Info */
+.btn-info {
+    background: linear-gradient(135deg, #EFE6D8, #FFE082);
+    border: 1px solid #D7CCC8;
+    color: #3E2723;
+}
+
+.btn-info:hover {
+    background: #E5D8C8;
+}
+
+/* Small buttons */
+.btn-xs {
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================
+   Role Badge
+========================= */
+
+.role-admin {
+    background: linear-gradient(135deg, #E74C3C, #C0392B);
+    color: #FFFFFF;
+    border: none;
+}
+
+.role-user {
+    background: #EFE6D8;
+    color: #3E2723;
+    border: 1px solid #D7CCC8;
+}
+
+/* =========================
+   Utility
+========================= */
+
+#id_msg {
+    display: inline-block;
+    width: 400px;
+    margin-left: 10px;
+    font-weight: 500;
+}

@@ -22,5 +22,6 @@ public class BoardVo {
 	int				b_step;
 	int				b_depth;
 	String			b_use;
+	String			mem_name;
 	
 }

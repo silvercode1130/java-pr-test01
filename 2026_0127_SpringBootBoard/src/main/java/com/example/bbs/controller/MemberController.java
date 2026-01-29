@@ -83,7 +83,7 @@ public class MemberController {
 		//세션에 로그인 정보 저장
 		session.setAttribute("user", user);
 		
-		return "redirect:list.do";
+		return "redirect:../board/list.do";
 	}
 	
 	//로그아웃
@@ -95,7 +95,7 @@ public class MemberController {
 		
 		//방법2) : SessionListener에 의해서 통지 받는다
 		session.invalidate();
-		return "redirect:list.do";
+		return "redirect:../board/list.do";
 	}
 	
 	//회원가입폼 띄우기
@@ -145,7 +145,7 @@ public class MemberController {
 		//DB insert
 		int res = memberDao.insert(vo);
 		
-		return "redirect:list.do";
+		return "redirect:../board/list.do";
 	}
 	
 	

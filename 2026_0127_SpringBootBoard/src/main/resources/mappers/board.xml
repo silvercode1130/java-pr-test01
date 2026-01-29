@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- b_idx 이용한 BoardVo 객체 1개 얻기 -->
 <select id="selectOneFromIdx" parameterType="int"
 								resultType="board">
-	select * from board where b_idx=#{ b_idx }
+	select * from board where b_idx = #{ b_idx }
 
 </select>
 
@@ -20,45 +20,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="selectOneFromMemId" parameterType="String"
 								resultType="board">
-	select * from board where mem_id=#{ mem_id }
+	select * from board where mem_id = #{ mem_id }
 
 </select>
 
 <!-- 추가 -->
 <insert id="insert" parameterType="board">
-
-insert into board values(
-							seq_board_b_idx.nextVal,
- 							#{b_subject},
-							#{b_content} ,							
-							#{b_ip} ,							
-							#{b_readhit} ,							
-							#{b_regdate} ,							
-							#{b_moddate} ,							
-							#{mem_idx} ,							
-							#{mem_id} ,							
-							#{b_ref} ,							
-							#{b_step} ,							
-							#{b_depth} ,							
-							default 
- 							 )
+	
+	insert into board (
+	    b_idx, b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
+	    mem_idx, mem_id, b_ref, b_step, b_depth, b_use, mem_name
+	)values(
+				seq_board_b_idx.nextVal,
+				#{b_subject},
+				#{b_content} ,							
+				#{b_ip} ,							
+				0 ,							
+				sysdate ,							
+				sysdate ,							
+				#{mem_idx} ,							
+				#{mem_id} ,							
+				seq_board_b_idx.currVal ,							
+				0 ,							
+				0 ,							
+				'y' ,
+				#{mem_name}
+					 )
 </insert>
+
+<!-- 조회수 증가 -->
+<update id="updateReadhit" parameterType="int">
+	update board set 	b_readhit =	b_readhit + 1
+	where b_idx = #{b_idx}
+</update>
+
 
 <!-- 수정
 <update id="update" parameterType="board">
 update board set 	b_subject		=		#{b_subject},
 							b_content = #{b_content} ,							
-							#{b_moddate} ,													
+							b_moddate = #{b_moddate} ,													
 							default 
 	where b_idx=#{b_idx}
 </update>
 -->
 
-<!-- 삭제 
+<!-- 삭제 --> 
 <delete id="delete" parameterType="int">
-	delete from board where b_idx=#{ b_idx }
+	delete from board where b_idx = #{ b_idx }
 </delete>
--->
+
 </mapper>
 
 

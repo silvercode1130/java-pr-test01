@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,51 +107,73 @@
 	
 </style>
 
+<script type="text/javascript">
+
+	function send(f){
+		let b_subject = f.b_subject.value.trim();
+		let b_content = f.b_content.value.trim();
+		
+		
+		if(b_subject==""){
+			alert("제목을 입력하세요!");
+			f.b_subject.value="";
+			f.b_subject.focus();
+			return;
+		}
+		
+		if(b_content==""){
+			alert("내용을 입력하세요!");
+			f.b_subject.value="";
+			f.b_subject.focus();
+			return;
+		}
+		
+		// 특정 아이피 밴
+		if("${ user.mem_ip }"=="172.30.1.98"){
+			alert("게시판 규칙위반으로 2036.01.29 까지 차단되었습니다."); return;
+		}
+		
+		f.method = "POST"
+		f.action = "insert.do";
+		f.submit();
+	}
+
+</script>
+
 </head>
 <body>
 
-<form>
+ <form>
 	<div id="box">
-		<!-- Bootstrap 3.x Panel -->		
-			
+		<!-- Bootstrap 3.x Panel -->
 			<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h4>
-							<span class="writer">제목 : ${vo.b_subject}</span>
-							
-						 <c:if test="${user.mem_idx eq vo.mem_idx}">
-							<span class="pull-right">
-								<button type="button" class="btn btn-warning btn-xs btn-edit"
-										onclick="location.href='insert.do'">수정</button>
-								<button type="button" class="btn btn-danger btn-xs btn-delete"
-										onclick="location.href='delete.do'">삭제</button>
-							</span>
-						 </c:if>	
-						</h4>
-					</div>
-
-					<div class="panel-body">
-						<div class="date" style="text-align:right;">작성일자 : ${vo.b_regdate}</div>
-						<div class="date" style="text-align:right;">수정일자 : ${vo.b_moddate}</div>
-
-						<div class="common" style="font-size:18px; font-weight:400;">${vo.b_content}</div>
+				<div class="panel-heading"><h4>새글쓰기</h4></div>
+				<div class="panel-body">
 			
-			
+				<!-- 1line -->
+				<div class="table">
+					<label>제목</label>
+					<input class="form-control" name="b_subject">
+				</div>
 				
+				<!-- 2line -->
+				<div class="table">
+					<label>내용</label>
+					<textarea class="form-control" rows="6" cols="" name="b_content"></textarea>
+				</div>
 				
-				
-				<!-- 4line -->
+				<!-- 3line -->
 				<div class="table" align="center">
-					<input class="btn btn-primary" type="button" value="메인화면"
+					<input class="btn btn-success" type="button" value="메인화면"
 							onclick="location.href='list.do'">
-					<input class="btn btn-info" type="button" value="답글쓰기"
-							onclick="">
+					<input class="btn btn-primary" type="button" value="새글쓰기"
+							onclick="send(this.form);">
 				</div>
 				
 			</div>
 		</div>
 	</div>
-</form>
+ </form>
 
 </body>
 </html>

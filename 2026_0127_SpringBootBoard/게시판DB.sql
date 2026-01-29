@@ -16,7 +16,8 @@ create table board(
 	b_ref		int,						-- 참조글 번호
 	b_step		int,						-- 글순서
 	b_depth		int,						-- 글깊이(답글)
-	b_use		char(1) default 'y'			-- 사용유무
+	b_use		char(1) default 'y',			-- 사용유무
+	mem_name	varchar2(100)
 );
 
 -- 기본키
@@ -26,6 +27,26 @@ alter table board
 -- 사용 유무 check 제약
 alter table board
 	add constraint ck_board_b_use check(b_use in ('y','n'));
+	
+-- name 컬럼 추가+fk 참조 추가
+alter table board
+	add mem_name varchar2(100);
+alter table board
+	add constraint fk_board_mem_name
+	foreign key(mem_name) references member(mem_name);
+	
+-- name 값 채워주기
+UPDATE board b
+SET mem_name = (
+  SELECT m.mem_name
+  FROM member m
+  WHERE m.mem_idx = b.mem_idx
+);
+
+SELECT column_name, data_type, nullable
+FROM user_tab_columns
+WHERE table_name = 'BOARD';
+
 	
 update board set b_use='Y'
 	
@@ -38,6 +59,8 @@ alter table board
 	
 select * from member;
 select * from board;
+
+delete from board where b_subject like '%img%';
 
 -- sample data
 -- 새글쓰기
@@ -54,7 +77,8 @@ insert into board values(
 	seq_board_b_idx.currVal,
 	0,
 	0,
-	'y'
+	'y',
+	'일길동'
 );
 
 insert into board values(
@@ -70,7 +94,8 @@ insert into board values(
 	1,
 	1,
 	1,
-	'y'
+	'y',
+	'김관리',
 );
 
 insert into board values(
@@ -86,7 +111,8 @@ insert into board values(
 	1,
 	2,
 	2,
-	'y'
+	'y',
+	'일길동'
 );
 
 select * from board order by b_ref desc, b_step asc;
