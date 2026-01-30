@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- Bootstrap 3.x -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+ <table style="text-align:center; width:80%">
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+		<th>조회수</th>
+		<th>작성일</th>
+		<th>작성자</th>
+		<th>참조글번호</th>
+		<th>답글순서</th>
+		<th>글깊이</th>
+		<th>사용유무</th>
+	</tr>
+	<c:forEach var="vo" items="${ requestScope.list }">
+		<tr>
+			<td>${ vo.b_idx }</td>
+			<td>${ vo.b_subject } (${ vo.b_ip })</td>
+			<td>${ vo.b_readhit }</td>
+			<td>${ vo.b_regdate }</td>
+			<td>${ vo.mem_id } (${ vo.mem_idx })</td>
+			<td>${ vo.b_ref }</td>
+			<td>${ vo.b_step }</td>
+			<td>${ vo.b_depth }</td>
+			<td>${ vo.b_use }</td>
+		</tr>
+	</c:forEach>
+ </table>
+</body>
+</html>

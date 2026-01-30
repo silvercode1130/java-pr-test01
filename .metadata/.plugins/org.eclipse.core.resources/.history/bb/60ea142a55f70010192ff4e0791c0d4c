@@ -1,0 +1,9 @@
+package com.example.db.dao;
+
+import java.util.List;
+
+import com.example.db.vo.DeptVo;
+
+public interface DeptDao {
+	List<DeptVo> selectList();
+}

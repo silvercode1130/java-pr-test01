@@ -1,0 +1,13 @@
+package com.example.db.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.db.vo.GogekVo;
+
+@Mapper
+public interface GogekDao {
+
+	List<GogekVo> selectList();
+}

@@ -1,0 +1,36 @@
+package com.example.db.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.db.dao.SawonDao;
+import com.example.db.vo.SawonVo;
+
+@Controller
+public class SawonController {
+	// 데이터베이스에서 Sawon 정보를 조회하는 컨트롤러
+	// 컨트롤러는 SawonDao 의 사원정보 조회기능이 필요함
+	// SawonController 는 SawonDao 를 의존한다(dependency) 고 지정해줘야함
+	// 이것을 DI(Dependency Injection, 의존성 주입) 이라고 한다
+	
+	// 자동연결
+	@Autowired
+	SawonDao sawonDao;
+	
+	@RequestMapping("/sawon/list.do")	// DispatcherServlet 에게 "/sawon/list.do" 호출
+	public String list(Model model) {
+		
+		List<SawonVo> list = sawonDao.selectList();
+		
+		System.out.println(list.size());	// 사원 명수가 출력되면 데이터 잘 출력된 것
+		
+		model.addAttribute("list", list);
+		
+		return "sawon/sawon_list";		// viewResolver 에게 "sawon/sawon_list" 호출하게 함
+	}
+}

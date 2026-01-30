@@ -1,0 +1,9 @@
+package com.example.db.vo;
+
+public class MemberProfileVo {
+	int				mem_idx;		// pk
+
+	String			mem_nickname;
+	String			mem_intro;
+	String			mem_img;
+}

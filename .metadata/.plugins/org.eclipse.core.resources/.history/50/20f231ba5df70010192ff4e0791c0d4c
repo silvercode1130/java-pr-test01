@@ -1,0 +1,11 @@
+package com.example.db.vo;
+
+public class VisitVo {
+	int		idx;
+	String	name;
+	String	content;
+	String	pwd;
+	String	ip;
+	String	regdate;
+	String	modifydate;
+}

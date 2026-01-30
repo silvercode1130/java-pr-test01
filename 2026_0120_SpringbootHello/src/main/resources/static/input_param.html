@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+	function send1(f){
+		// 입력값 체크 반드시 할 것
+		f.action = "insert1.do";
+		f.submit();	// 전송
+	}
+	
+	function send2(f){
+		f.action = "insert2.do";
+		f.submit();	// 전송
+	}
+	
+	function send3(f){
+		f.action = "insert3.do";
+		f.submit();	// 전송
+	}
+	
+</script>
+
+</head>
+<body>
+
+ <form action="">
+ 	이름 : <input name="irum" value="일길동"><br>
+ 	나이 : <input name="age" value="20"><br>
+ 	전화번호 : <input name="tel" value="010-1111-1111"><br>
+ 	
+ 	<input type="button" value="낱개로 받기" onclick="send1(this.form);">
+ 	<input type="button" value="객체로 받기" onclick="send2(this.form);">
+ 	<input type="button" value="Map으로 받기" onclick="send3(this.form);">
+ 	
+ </form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+package com.example.db.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class SawonController {
+	
+	@RequestMapping("/sawon/list.do")	// DispatcherServlet 에게 "/sawon/list.do" 호출
+	public String list(Model model) {
+		
+		return "sawon/sawon_list";		// viewResolver 에게 "sawon/sawon_list" 호출하게 함
+	}
+}

@@ -1,0 +1,23 @@
+package com.example.db.vo;
+
+import java.time.LocalDateTime;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+@Data
+@Alias("item")
+public class ItemVo {
+//=========== 상품정보 ============
+	int				item_idx;		// pk
+
+	String			item_name;
+	int				item_price;
+	String			item_thumbnail_img;
+	String			item_detail_img;
+	int				item_stock;		// 재고
+	String			item_category;	// 상품분류 (강아지/고양이, 사료, 산책용품 등)
+	LocalDateTime	item_regdate;
+	LocalDateTime	item_moddate;
+}

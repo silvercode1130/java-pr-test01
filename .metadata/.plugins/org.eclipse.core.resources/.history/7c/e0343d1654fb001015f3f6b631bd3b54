@@ -1,0 +1,7 @@
+package com.example.bbs.vo;
+
+public class RoleVo {
+	int				role_idx;		// pk
+
+	String			role_name;		// user / doctor / admin
+}

@@ -1,0 +1,5 @@
+package com.example.bbs.vo;
+
+public class MemberAddrVo {
+
+}
