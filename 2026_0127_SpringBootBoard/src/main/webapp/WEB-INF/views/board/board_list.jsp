@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,9 +169,10 @@
 		
 		<!-- table data -->
 		<!-- 게시글 있는 경우 -->
+		<!-- for(BoardVo vo : list) -->
 		<c:forEach var="vo" items="${ requestScope.list }">
 			<tr>
-				<td>${ vo.b_idx }</td>
+				<td>${vo.no}(${ vo.b_idx })</td>
 				<td style="text-align:left;">
 				
 					<!-- b_depth 만큼 공백 넣는다 -->
@@ -183,22 +185,30 @@
 						ㄴ
 					</c:if>
 					
-					<a href="view.do?b_idx=${ vo.b_idx }">${ vo.b_subject } (${ vo.b_ip })</a>
-				</td>
-				<td>${ vo.b_readhit }</td>
-				<td>
-					${ vo.mem_name }
-				</td>
-				<td>${ vo.b_regdate }</td>
+					<!-- 삭제가 된 경우 -->
+					<c:if test="${ vo.b_use eq 'n' }">
+						<font color="gray">삭제된 게시물입니다.</font>
+					</c:if>
+					
+					<!-- 삭제가 안 된 경우 -->
+					<c:if test="${ vo.b_use eq 'y' }">
+						<a href="view.do?b_idx=${ vo.b_idx }&page=${ (empty param.page) ? 1 : param.page }">${ fn:replace(vo.b_subject, "img","") } (${ vo.b_ip })</a>
+					</c:if>
+						</td>
+						<td>${ vo.b_readhit }</td>
+						<td>
+							${ vo.mem_name }
+						</td>
+						<td>${ vo.b_regdate }</td>
 				
 				<!-- 편집 -->
 				<td>
 					<!-- 로그인 유저의 권한이 ROLE_ADMIN 이거나 본인이면 수정/삭제 버튼 보이기 -->
 					<c:if test="${ (user.mem_role eq 'ROLE_ADMIN') or (user.mem_idx eq vo.mem_idx)}">
 						<form>
-							<input type="hidden" name="mem_idx" value="${ vo.mem_idx }">
+							<input type="hidden" name="b_idx" value="${ vo.b_idx }">
 							<input	class="btn btn-warning btn-xs" value="수정"
-									onclick="location.href='modify_form.do?mem_idx='+${ vo.mem_idx };" style="width: 40px">
+									onclick="location.href='modify_form.do?b_idx='+${ vo.b_idx };" style="width: 40px">
 							<input	class="btn btn-danger btn-xs" value="삭제"
 									onclick="board_delete(this.form);" style="width: 40px;">
 						</form>
@@ -208,7 +218,21 @@
 			</tr>
 		</c:forEach>
 	  </tbody>
+	  
 	 </table>
+	  <!-- page 목록 -->
+	  <div style="text-align: center;">
+	  	${ pageMenu }
+<!-- 	  
+		<ul class='pagination'>
+			<li><a href='#'>◀</a></li>
+			<li class='active'><a href='#'>1</a></li>
+			<li><a href='list.do?page=2'>2</a></li>
+			<li><a href='list.do?page=3'>3</a></li>
+			<li><a href='list.do?page=4'>▶</a></li>
+		</ul>
+-->
+	  </div>
 </div>
 
 </body>

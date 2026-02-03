@@ -117,4 +117,26 @@ insert into board values(
 
 select * from board order by b_ref desc, b_step asc;
 
+-- paging 처리를 위한 sql
+select * from 
+(
+	select
+		rank() over(order by b_ref desc, b_step asc) as no,
+		b.*
+	from (select * from board) b
+)
+where no between 1 and 10
+-- select 문의 실행순서를 이해하는 것이 중요!
+/*
+	1. (select * from board)
+	1-1. where no between 1 and 10		<- 이 시점에서 no 가 없으므로 에러남!
+	2. b.*
+	3. rank() over(order by b_ref desc, b_step asc) as no
+*/
+
+-- 전체 게시물 수 구하기
+select nvl(count(*), 0) from board
+
+-- 삭제된 글 전부 복구
+update board set b_use='y'
 */

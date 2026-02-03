@@ -167,6 +167,8 @@
 </head>
 <body>
  <form>
+ 	<input type="hidden" name="url" value="${ param.url }">
+ 	<!-- 							폼이 떴을 때 parameter(query)에 뜬 url 정보를 저장함 -->
  	<div id="box">
  		<!-- Bootstrap 3.x Panel -->
 		<div class="panel panel-primary">

@@ -4,71 +4,116 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.bbs.dao.BoardDao">
 
- <!-- 전체조회 -->
-  <select id="selectList" resultType="board">
-  	select * from board order by b_ref desc, b_step asc
-  </select>
+	<!-- 전체조회 -->
+	<select id="selectList" resultType="board">
+		select * from board order by
+		b_ref desc, b_step asc
+	</select>
 
-<!-- b_idx 이용한 BoardVo 객체 1개 얻기 -->
-<select id="selectOneFromIdx" parameterType="int"
-								resultType="board">
-	select * from board where b_idx = #{ b_idx }
+	<!-- b_idx 이용한 BoardVo 객체 1개 얻기 -->
+	<select id="selectOne" parameterType="int"
+		resultType="board">
+		select * from board where b_idx = #{ b_idx }
 
-</select>
+	</select>
 
-<!-- mem_id 이용한 boardVo 객체 1개 얻기 -->
+	<!-- Page 별 검색조건별 조회 -->
+	<select id="selectConditionList" parameterType="Map">
+		select * from
+		(
+			select
+			rank() over(order by b_ref desc, b_step asc) as no,
+			b.*
+			from (select * from board) b
+		)
+		where no between #{start} and #{end}
+	</select>
 
-<select id="selectOneFromMemId" parameterType="String"
-								resultType="board">
-	select * from board where mem_id = #{ mem_id }
+	<!-- 전체 게시물 수 구하기 -->
+	<select id="selectRowTotal" parameterType="Map" resultType="int">
+		select nvl(count(*), 0) from board
+	</select>
 
-</select>
+	<!-- 글쓰기 -->
+	<insert id="insert" parameterType="board">
 
-<!-- 추가 -->
-<insert id="insert" parameterType="board">
-	
-	insert into board (
-	    b_idx, b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
-	    mem_idx, mem_id, b_ref, b_step, b_depth, b_use, mem_name
-	)values(
-				seq_board_b_idx.nextVal,
-				#{b_subject},
-				#{b_content} ,							
-				#{b_ip} ,							
-				0 ,							
-				sysdate ,							
-				sysdate ,							
-				#{mem_idx} ,							
-				#{mem_id} ,							
-				seq_board_b_idx.currVal ,							
-				0 ,							
-				0 ,							
-				'y' ,
-				#{mem_name}
-					 )
-</insert>
+		insert into board (
+		b_idx,
+		b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
+		mem_idx,
+		mem_id, b_ref, b_step, b_depth, b_use, mem_name
+		)values(
+		seq_board_b_idx.nextVal,
+		#{b_subject},
+		#{b_content} ,
+		#{b_ip} ,
+		0 ,
+		sysdate ,
+		sysdate ,
+		#{mem_idx} ,
+		#{mem_id} ,
+		seq_board_b_idx.currVal ,
+		0 ,
+		0 ,
+		'y' ,
+		#{mem_name}
+		)
+	</insert>
 
-<!-- 조회수 증가 -->
-<update id="updateReadhit" parameterType="int">
-	update board set 	b_readhit =	b_readhit + 1
-	where b_idx = #{b_idx}
-</update>
+	<!-- 조회수 증가 -->
+	<update id="updateReadhit" parameterType="int">
+		update board set
+		b_readhit = b_readhit + 1
+		where b_idx = #{b_idx}
+	</update>
 
 
-<!-- 수정
-<update id="update" parameterType="board">
-update board set 	b_subject		=		#{b_subject},
-							b_content = #{b_content} ,							
-							b_moddate = #{b_moddate} ,													
-							default 
-	where b_idx=#{b_idx}
-</update>
--->
+	<!-- 수정 <update id="update" parameterType="board"> update board set b_subject 
+		= #{b_subject}, b_content = #{b_content} , b_moddate = #{b_moddate} , default 
+		where b_idx=#{b_idx} </update> -->
 
-<!-- 삭제 --> 
-<delete id="delete" parameterType="int">
-	delete from board where b_idx = #{ b_idx }
-</delete>
+	<!-- soft delete -->
+	<update id="delete" parameterType="int">
+		update board
+		set b_use = 'n'
+		where b_idx = #{ b_idx }
+	</update>
+
+	<!-- 같은 기준글 그룹 내에서 기준글보다 b_step 이 큰 게시물의 b_step 을 증가 -->
+	<update id="updateStep" parameterType="board">
+		update board
+		set b_step =
+		b_step + 1
+		where b_ref = #{b_ref} and b_step > #{b_step}
+	</update>
+
+
+	<!-- 답글쓰기 -->
+	<insert id="reply" parameterType="board">
+
+		insert into board (
+		b_idx,
+		b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
+		mem_idx,
+		mem_id, b_ref, b_step, b_depth, b_use, mem_name
+		)values(
+		seq_board_b_idx.nextVal,
+		#{b_subject},
+		#{b_content} ,
+		#{b_ip} ,
+		0 ,
+		sysdate ,
+		sysdate ,
+		#{mem_idx} ,
+		#{mem_id} ,
+		#{b_ref} ,
+		#{b_step} ,
+		#{b_depth} ,
+		'y' ,
+		#{mem_name}
+		)
+	</insert>
+
 
 </mapper>
 

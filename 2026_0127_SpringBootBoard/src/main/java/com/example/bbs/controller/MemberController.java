@@ -51,9 +51,9 @@ public class MemberController {
 	}
 	
 	//로그인
-	// /member/login.do?mem_id=hong&mem_pwd=1234
+	// /member/login.do?mem_id=hong&mem_pwd=1234&url=http://location.href:8080...
 	@RequestMapping("/member/login.do")
-	public String login(String mem_id,String mem_pwd, RedirectAttributes ra) {
+	public String login(String mem_id,String mem_pwd, String url, RedirectAttributes ra) {
 													// 리다이렉트 시 속성(쿼리) 전달하는 객체
 													// model 은 같은 요청(forward) 할 때만 가능
 		
@@ -82,6 +82,11 @@ public class MemberController {
 		
 		//세션에 로그인 정보 저장
 		session.setAttribute("user", user);
+		
+		//
+		if(!url.isEmpty()) {
+			return "redirect:" + url;
+		}
 		
 		return "redirect:../board/list.do";
 	}
