@@ -1,7 +1,0 @@
-package com.example.db.vo;
-
-public class DeptVo {
-	int deptno;
-	String dname;
-	String loc;
-}

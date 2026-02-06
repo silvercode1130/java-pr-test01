@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bbs.dao.BoardDao">
+
+	<!-- 전체조회 -->
+	<select id="selectList"  resultType="board">
+	   select * from board
+	   order by b_ref desc, b_step asc
+	</select>
+	
+	<!-- Page별 검색조건별 조회 -->
+	<select id="selectConditionList" parameterType="Map" resultType="board">
+	    select * from
+		(
+			select 
+			  rank() over(order by b_ref desc , b_step asc) as no,
+			  b.*,
+			  (select nvl(count(*),0) from comment_tb where b_idx=b.b_idx) as cmt_count	
+			from (select * from board) b
+		)
+		where no between #{ start } and #{ end }
+	</select>
+	
+	<!-- 전체게시물수 구하기 -->
+	<select id="selectRowTotal"  parameterType="Map" resultType="int">
+	   
+	   select nvl(count(*),0) from board
+	 	
+	</select>
+	
+	
+	<!-- b_idx 게시글 1개 얻어오기  -->
+	<select id="selectOne" parameterType="int" resultType="board">
+	   select * from board
+	   where b_idx = #{ b_idx }
+	</select>
+	
+	
+	<!-- 새글쓰기 -->
+	<insert id="insert"  parameterType="board">
+		insert into board (
+			b_idx,
+			b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
+			mem_idx,
+			mem_id, b_ref, b_step, b_depth, b_use, mem_name
+		)values(
+			seq_board_b_idx.nextVal,
+			#{b_subject},
+			#{b_content} ,
+			#{b_ip} ,
+			0 ,
+			sysdate ,
+			sysdate ,
+			#{mem_idx} ,
+			#{mem_id} ,
+			seq_board_b_idx.currVal ,
+			0 ,
+			0 ,
+			'y' ,
+			#{mem_name}
+			)
+	</insert>
+	
+	<!-- 답글쓰기 -->
+	<insert id="reply"  parameterType="board">
+		insert into board (
+			b_idx,
+			b_subject, b_content, b_ip, b_readhit, b_regdate, b_moddate,
+			mem_idx,
+			mem_id, b_ref, b_step, b_depth, b_use, mem_name
+		)values(
+			seq_board_b_idx.nextVal,
+			#{b_subject},
+			#{b_content} ,
+			#{b_ip} ,
+			0 ,
+			sysdate ,
+			sysdate ,
+			#{mem_idx} ,
+			#{mem_id} ,
+			#{b_ref} ,
+			#{b_step} ,
+			#{b_depth} ,
+			'y' ,
+			#{mem_name}
+		)
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="board">
+	    UPDATE board set
+	        b_subject  = #{b_subject},
+	        b_content  = #{b_content},
+	        b_moddate  = SYSDATE
+	    WHERE b_idx = #{b_idx}
+	</update>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateReadhit" parameterType="int">
+	    update board set b_readhit = b_readhit + 1
+	    where  b_idx = #{ b_idx}
+	</update>
+	
+	<!-- 기준글보다 b_step이 큰게시물의 b_step을 증가 -->
+	<update id="updateStep" parameterType="board">
+	    update board set b_step = b_step + 1
+	    where b_ref=#{ b_ref} and b_step > #{ b_step}
+	</update>
+	
+	<!-- 삭제처리  -->
+	<update id="updateNoUse" parameterType="int">
+	    update board set b_use='n'
+	    where  b_idx=#{ b_idx }
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

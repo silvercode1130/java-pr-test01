@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="board"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="b_modifydate"/>
+			<item value="modify"/>
+			<item value="댓글용"/>
+			<item value="disp"/>
 			<item value="member"/>
 			<item value="th"/>
 			<item value="mem_num"/>
 			<item value="mem_id"/>
 		</list>
 		<list key="replacehistory">
+			<item value="b_moddate"/>
 			<item value="board"/>
 			<item value="td"/>
 			<item value="tr"/>
