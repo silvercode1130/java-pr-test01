@@ -239,10 +239,10 @@
 		          <form class="form-inline">
 		          
 			          <input  class="btn btn-primary" type="button" value="메인화면"
-			                  onclick="location.href='list.do?page=${ param.page }'">
+			                  onclick="location.href='list.do?page=${ param.page }&search=${param.search}&search_text=${param.search_text}'">
 			                  
 			          <!-- main글일 경우만 답글 허용 -->        
-			          <c:if test="${ vo.b_depth le 0 }">        
+			          <c:if test="${ (vo.b_depth le 0) and  (param.search eq 'all') }">        
 				          <input  class="btn btn-info"    type="button" value="답글쓰기"
 				                  onclick="reply_form();">
 			          </c:if>        
@@ -252,6 +252,8 @@
 			    
 			              <input type="hidden"  name="b_idx" value="${ vo.b_idx }">
 			              <input type="hidden"  name="page"  value="${ param.page }">
+			              <input type="hidden"  name="search"  value="${ param.search }">
+			              <input type="hidden"  name="search_text"  value="${ param.search_text }">
 			               
 				          <input  class="btn btn-success" type="button" value="수정하기"
 				          		  onclick="location.href='modify_form.do?b_idx=${ vo.b_idx }&page=${ param.page }'">

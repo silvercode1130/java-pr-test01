@@ -18,15 +18,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  rank() over(order by b_ref desc , b_step asc) as no,
 			  b.*,
 			  (select nvl(count(*),0) from comment_tb where b_idx=b.b_idx) as cmt_count	
-			from (select * from board) b
+			from (
+					select * from board
+					<trim prefix="where" prefixOverrides="or">
+				   		<if test="mem_name!=null">
+				   			mem_name like '%' || #{ mem_name } || '%'
+				   		</if>
+				   		<if test="b_subject!=null">
+				   			or b_subject like '%' || #{ b_subject } || '%'
+				   		</if>
+				   		<if test="b_content!=null">
+				   			or b_content like '%' || #{ b_content } || '%'
+				   		</if>
+	  				 </trim>
+				 ) b
 		)
 		where no between #{ start } and #{ end }
 	</select>
 	
-	<!-- 전체게시물수 구하기 -->
+	<!-- 검색 조건별 게시물수 구하기 -->
 	<select id="selectRowTotal"  parameterType="Map" resultType="int">
 	   
 	   select nvl(count(*),0) from board
+	   <trim prefix="where" prefixOverrides="or">
+	   		
+	   		<if test="mem_name!=null">
+	   			mem_name like '%' || #{ mem_name } || '%'
+	   		</if>
+	   		<if test="b_subject!=null">
+	   			or b_subject like '%' || #{ b_subject } || '%'
+	   		</if>
+	   		<if test="b_content!=null">
+	   			or b_content like '%' || #{ b_content } || '%'
+	   		</if>
+	   		
+	   </trim>
 	 	
 	</select>
 	

@@ -1,5 +1,7 @@
 package com.example.bbs.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,14 +38,41 @@ public class BoardController {
 	
 	
 	//board/list.do
+	//board/list.do?search=name&search_text=길동&page=2
 	//board/list.do?page=2
 	
 	@RequestMapping("list.do")
-	public String list(@RequestParam(name="page",defaultValue = "1") int nowPage,
-			           Model model) {
+	public String list(	@RequestParam(name="search", defaultValue = "all") String search,
+						@RequestParam(name="search_text", defaultValue = "") String search_text,
+						@RequestParam(name="page",defaultValue = "1") int nowPage,
+						Model model) throws Exception {
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		// 검색조건 추가
+		if(search.equals("name_subject_content")) {
+			
+			// 이름+제목+내용
+			map.put("mem_name", search_text);
+			map.put("b_subject", search_text);
+			map.put("b_content", search_text);
+			
+		}else if(search.equals("name")) {
+			map.put("mem_name", search_text);
+		
+		}else if(search.equals("subject")) {
+			map.put("b_subject", search_text);
+		
+		}else if(search.equals("content")) {
+			map.put("b_content", search_text);
+			
+		}else if(search.equals("subject_content")) {
+			map.put("b_subject", search_text);
+			map.put("b_content", search_text);
+		}
+		
+		System.out.println(map);                   
 		
 		//page의 범위 계산
 		int start 	= (nowPage-1) * MyConstant.Board.BLOCK_LIST + 1 ;
@@ -60,7 +89,11 @@ public class BoardController {
 		//전체 게시물수
 		int rowTotal = boardDao.selectRowTotal(map);
 		//페이지 만드는 코드
-		String pageMenu = Paging.getPaging2("list.do", 
+		String searchFilter = String.format("search=%s&search_text=%s", search,
+																		URLEncoder.encode(search_text, "utf-8")
+																		);
+		String pageMenu = Paging.getPaging3("list.do",
+											searchFilter,
 				                            nowPage, 
 				                            rowTotal,
 				                            MyConstant.Board.BLOCK_LIST,
@@ -271,14 +304,17 @@ public class BoardController {
 		return "redirect:view.do";
 	}
 
-	//     /board/delete.do?b_idx=5&page=3
+	//     /board/delete.do?b_idx=5&page=3&search=name&search_text=길동
 	//삭제
 	@PostMapping("delete.do")
-	public String delete(int b_idx,int page,RedirectAttributes ra) {
+	public String delete(	String search, String search_text,
+							int b_idx,int page,RedirectAttributes ra) {
 		
 		//DB delete처리 :  b_use='n' 변경
 		int res = boardDao.updateNoUse(b_idx);
 		
+		ra.addAttribute("search", search);
+		ra.addAttribute("search_text", search_text);	// &search=name&search_text=길동
 		ra.addAttribute("page", page); // list.do?page=3
 		
 		return "redirect:list.do";

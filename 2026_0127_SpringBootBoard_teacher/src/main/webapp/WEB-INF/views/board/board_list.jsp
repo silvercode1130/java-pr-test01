@@ -49,7 +49,45 @@
 	   //글쓰기 폼으로 이동
 	   location.href = "insert_form.do";
 	   
-   }
+   }//end: insert_form()
+   
+   function find(){
+		let search = $("#search").val();
+		let search_text = $("#search_text").val().trim();
+		
+		// 전체 검색이 아닌데 검색어가 비어있으면
+		if(search != "all" && search_text == ""){
+			alert("검색어를 입력하세요!");
+			$("#search_text").val("");
+			$("#search_text").focus();
+			
+			return;
+		}
+		
+		// 서버로 전송
+		location.href = "list.do?search="+search+
+						"&search_text="+encodeURIComponent(search_text,"utf-8");
+		
+   }//end: find()
+
+</script>
+
+<!-- 초기화 -->
+<script type="text/javascript">
+
+	$(document).ready(function(){
+	 /* 검색이 비어있지 않으면 */
+	 if("${ not empty param.search }"=="true"){
+		$("#search").val("${param.search}");
+
+	 }
+	 
+	 /* 전체검색시에는 검색어를 비우자*/
+	 if("${ param.search eq 'all'}"=="true"){
+		$("#search_text").val("");
+	 }
+	 
+	});
 
 </script>
 
@@ -137,7 +175,7 @@
                   
                    <!-- 삭제가 안된경우 -->
                    <c:if test="${ vo.b_use eq 'y' }">
-                   	  <a href="view.do?b_idx=${ vo.b_idx }&page=${ (empty param.page) ? 1 : param.page }">${ fn:replace(vo.b_subject,"img","") }</a>
+                   	  <a href="view.do?b_idx=${ vo.b_idx }&page=${ (empty param.page) ? 1 : param.page }&search=${param.search}&search_text=${param.search_text}">${ fn:replace(vo.b_subject,"img","") }</a>
                    	  	<!-- 댓글이 있을 때만 개수 표시 -->
                    	  	<c:if test="${ vo.cmt_count ne 0 }">
                    	  		&nbsp;<span class="badge" style="background: #33aacc;">${ vo.cmt_count }</span>
@@ -152,6 +190,24 @@
               </tr>
            </c:forEach>
        </table>
+       <!-- 검색메뉴 -->
+       <form class="form-inline">
+	       <div style="text-align:center;">
+	       	<select class="form-control" id="search">
+	       		<option value="all">전체보기</option>
+	       		<option value="name">이름</option>
+	       		<option value="subject">제목</option>
+	       		<option value="content">내용</option>
+	       		<option value="subject_content">제목+내용</option>
+	       		<option value="name_subject_content">이름+제목+내용</option>
+	       	</select>
+	       	
+	       	<input class="form-control" id="search_text" value="${ param.search_text }">
+	       	<input class="btn btn-primary" type="button" value="검색"
+	       			onclick="find();">
+	       </div>
+       </form>
+       
        
        <!-- Page Menu -->
        <div style="text-align: center;">
