@@ -255,7 +255,7 @@
 			              <input type="hidden"  name="search"  value="${ param.search }">
 			              <input type="hidden"  name="search_text"  value="${ param.search_text }">
 			               
-				          <input  class="btn btn-success" type="button" value="수정하기"
+				          <input  class="btn btn-su ccess" type="button" value="수정하기"
 				          		  onclick="location.href='modify_form.do?b_idx=${ vo.b_idx }&page=${ param.page }'">
 				          <input  class="btn btn-danger"  type="button" value="삭제하기"
 				                  onclick="board_delete(this.form);">
